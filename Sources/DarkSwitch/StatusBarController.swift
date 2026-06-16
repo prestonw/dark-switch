@@ -73,6 +73,9 @@ final class StatusBarController: NSObject {
         menu.addItem(.separator())
         menu.addItem(rulesHeaderMenuItem)
         menu.addItem(.separator())
+        let about = NSMenuItem(title: "About Dark Switch", action: #selector(showAbout), keyEquivalent: "")
+        about.target = self
+        menu.addItem(about)
         let quit = NSMenuItem(title: "Quit Dark Switch", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.addItem(quit)
     }
@@ -172,6 +175,10 @@ final class StatusBarController: NSObject {
         store.save()
         applyMode()
         updateMenu()
+    }
+
+    @objc private func showAbout() {
+        AboutWindowController.shared.show()
     }
 
     @objc private func removeRule(_ sender: NSMenuItem) {

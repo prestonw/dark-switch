@@ -7,10 +7,16 @@ LAUNCHD  = $(HOME)/Library/LaunchAgents/com.prestonw.dark-switch.plist
 build:
 	swift build -c release
 
-bundle: build
-	mkdir -p $(BUNDLE)/Contents/MacOS
+bundle: build icon
+	mkdir -p $(BUNDLE)/Contents/MacOS $(BUNDLE)/Contents/Resources
 	cp .build/release/$(APP_NAME) $(BUNDLE)/Contents/MacOS/$(APP_NAME)
 	cp Info.plist $(BUNDLE)/Contents/Info.plist
+	cp AppIcon.icns $(BUNDLE)/Contents/Resources/AppIcon.icns
+
+icon: AppIcon.icns
+
+AppIcon.icns: AppIcon.iconset
+	iconutil --convert icns AppIcon.iconset
 
 run: build
 	.build/release/$(APP_NAME)
