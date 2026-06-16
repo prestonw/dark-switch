@@ -3,7 +3,7 @@ import Foundation
 final class ConfigStore {
     static let shared = ConfigStore()
 
-    private(set) var config: Config
+    var config: Config
     private let fileURL: URL
 
     private init() {
