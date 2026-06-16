@@ -9,18 +9,20 @@
     <key>CFBundleIdentifier</key>
     <string>com.prestonw.dark-switch</string>
     <key>CFBundleVersion</key>
-    <string>1.0.0</string>
+    <string>2.0.0</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
+    <string>2.0.0</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleExecutable</key>
-    <string>dark-switch</string>
+    <string>DarkSwitch</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
     <key>LSUIElement</key>
     <true/>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSAppleEventsUsageDescription</key>
-    <string>Dark Switch uses Apple Events to detect the active application and switch macOS appearance.</string>
+    <string>Dark Switch uses Apple Events to switch macOS appearance between light and dark mode.</string>
 </dict>
 </plist>
