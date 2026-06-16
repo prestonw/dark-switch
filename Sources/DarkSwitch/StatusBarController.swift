@@ -5,6 +5,7 @@ final class StatusBarController: NSObject {
     private let menu = NSMenu()
     private let store = ConfigStore.shared
     private let watcher = WorkspaceWatcher()
+    private var iconAnimator: MenuBarIcon?
     private var frontApp: String = ""
     private var ruleMenuItems: [NSMenuItem] = []
 
@@ -47,7 +48,13 @@ final class StatusBarController: NSObject {
 
     override init() {
         super.init()
+
         statusItem.menu = menu
+
+        if let button = statusItem.button {
+            iconAnimator = MenuBarIcon(button: button, mode: store.config.defaultMode)
+        }
+
         buildMenu()
 
         watcher.onAppChange = { [weak self] name in
@@ -63,6 +70,8 @@ final class StatusBarController: NSObject {
     // MARK: - Menu construction
 
     private func buildMenu() {
+        menu.addItem(makeHeaderItem())
+        menu.addItem(.separator())
         menu.addItem(statusMenuItem)
         menu.addItem(toggleMenuItem)
         menu.addItem(.separator())
@@ -80,6 +89,33 @@ final class StatusBarController: NSObject {
         menu.addItem(quit)
     }
 
+    private func makeHeaderItem() -> NSMenuItem {
+        let height: CGFloat = 52
+        let width: CGFloat = 240
+        let container = NSView(frame: NSRect(x: 0, y: 0, width: width, height: height))
+
+        let iconView = NSImageView(frame: NSRect(x: 12, y: 10, width: 32, height: 32))
+        iconView.image = NSApp.applicationIconImage
+        iconView.imageScaling = .scaleProportionallyUpOrDown
+        container.addSubview(iconView)
+
+        let nameField = NSTextField(labelWithString: "Dark Switch")
+        nameField.font = .boldSystemFont(ofSize: 13)
+        nameField.frame = NSRect(x: 52, y: 26, width: width - 64, height: 18)
+        container.addSubview(nameField)
+
+        let tagField = NSTextField(labelWithString: "Appearance switcher")
+        tagField.font = .systemFont(ofSize: 11)
+        tagField.textColor = .secondaryLabelColor
+        tagField.frame = NSRect(x: 52, y: 10, width: width - 64, height: 16)
+        container.addSubview(tagField)
+
+        let item = NSMenuItem()
+        item.view = container
+        item.isEnabled = false
+        return item
+    }
+
     // MARK: - State
 
     private func effectiveMode() -> AppMode {
@@ -87,15 +123,15 @@ final class StatusBarController: NSObject {
     }
 
     private func applyMode() {
-        AppearanceManager.set(effectiveMode())
+        let mode = effectiveMode()
+        AppearanceManager.set(mode)
+        iconAnimator?.transition(to: mode)
     }
 
     private func updateMenu() {
         let cfg = store.config
         let mode = effectiveMode()
         let hasRule = !frontApp.isEmpty && cfg.appRules[frontApp] != nil
-
-        statusItem.button?.title = mode == .dark ? "●" : "○"
 
         if hasRule {
             statusMenuItem.title = "Default: \(cfg.defaultMode.rawValue)  |  Active: \(mode.rawValue) (override)"
@@ -159,6 +195,7 @@ final class StatusBarController: NSObject {
         store.config.appRules[frontApp] = .light
         store.save()
         AppearanceManager.set(.light)
+        iconAnimator?.transition(to: .light)
         updateMenu()
     }
 
@@ -167,6 +204,7 @@ final class StatusBarController: NSObject {
         store.config.appRules[frontApp] = .dark
         store.save()
         AppearanceManager.set(.dark)
+        iconAnimator?.transition(to: .dark)
         updateMenu()
     }
 
@@ -177,15 +215,15 @@ final class StatusBarController: NSObject {
         updateMenu()
     }
 
-    @objc private func showAbout() {
-        AboutWindowController.shared.show()
-    }
-
     @objc private func removeRule(_ sender: NSMenuItem) {
         guard let appName = sender.representedObject as? String else { return }
         store.config.appRules.removeValue(forKey: appName)
         store.save()
         applyMode()
         updateMenu()
+    }
+
+    @objc private func showAbout() {
+        AboutWindowController.shared.show()
     }
 }
