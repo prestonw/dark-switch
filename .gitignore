@@ -1,0 +1,6 @@
+.build/
+DarkSwitch.app/
+AppIcon.icns
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+.DS_Store

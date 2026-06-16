@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Switch</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --fg: #1c1c1e;
+      --muted: #6e6e73;
+      --accent: #0071e3;
+      --border: #e5e5ea;
+      --max: 680px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --fg: #f5f5f7;
+        --muted: #98989d;
+        --accent: #2997ff;
+        --border: #2c2c2e;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 80px 24px 60px;
+      text-align: center;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      margin: 0 auto 24px;
+      display: block;
+      background: #1c1c1e;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    nav {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav a {
+      display: block;
+      padding: 14px 0;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    section + section { margin-top: 48px; }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    p + p { margin-top: 10px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+    <rect width="1024" height="1024" rx="225" ry="225" fill="#1C1C1E"/>
+    <clipPath id="lh"><rect x="0" y="0" width="512" height="1024"/></clipPath>
+    <clipPath id="rh"><rect x="512" y="0" width="512" height="1024"/></clipPath>
+    <circle cx="512" cy="512" r="310" fill="#F2F2F7" clip-path="url(#lh)"/>
+    <circle cx="512" cy="512" r="310" fill="#2C2C2E" clip-path="url(#rh)"/>
+    <circle cx="512" cy="512" r="310" fill="none" stroke="#48484A" stroke-width="5"/>
+    <circle cx="350" cy="512" r="52" fill="#FF9F0A"/>
+    <g stroke="#FF9F0A" stroke-width="22" stroke-linecap="round">
+      <line x1="350" y1="418" x2="350" y2="396"/>
+      <line x1="350" y1="606" x2="350" y2="628"/>
+      <line x1="256" y1="512" x2="234" y2="512"/>
+      <line x1="444" y1="512" x2="466" y2="512"/>
+      <line x1="283" y1="445" x2="268" y2="430"/>
+      <line x1="417" y1="579" x2="432" y2="594"/>
+      <line x1="417" y1="445" x2="432" y2="430"/>
+      <line x1="283" y1="579" x2="268" y2="594"/>
+    </g>
+    <path d="M694 438 A100 100 0 1 0 694 586 A68 68 0 1 1 694 438 Z" fill="#EBEBF5" opacity="0.9"/>
+    <line x1="512" y1="202" x2="512" y2="822" stroke="#1C1C1E" stroke-width="12"/>
+  </svg>
+  <h1>Dark Switch</h1>
+  <p>Automatically switch between light and dark mode<br>based on the app you are using.</p>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section>
+    <h2>What it does</h2>
+    <p>Dark Switch sits in your menu bar and watches which application is in the foreground. When you switch apps, it automatically sets macOS to light or dark mode based on the rules you configure. No scheduled timers, no cloud sync — just instant, per-app appearance control.</p>
+  </section>
+
+  <section>
+    <h2>Open source</h2>
+    <p>Dark Switch is free, open source software released under the MIT License. You are free to inspect, modify, and distribute the code.</p>
+  </section>
+
+  <section>
+    <h2>Privacy</h2>
+    <p>Dark Switch does not collect, transmit, or store any personal data. All configuration is saved locally on your Mac. See the <a href="privacy.html">Privacy Policy</a> for full details.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Copyright &copy; 2026 Preston W &mdash; MIT License</p>
+</footer>
+
+</body>
+</html>

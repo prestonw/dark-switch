@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Dark Switch</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --fg: #1c1c1e;
+      --muted: #6e6e73;
+      --accent: #0071e3;
+      --border: #e5e5ea;
+      --max: 680px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --fg: #f5f5f7;
+        --muted: #98989d;
+        --accent: #2997ff;
+        --border: #2c2c2e;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    nav {
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav a {
+      display: block;
+      padding: 14px 0;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .updated {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+
+    section { margin-bottom: 36px; }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    p + p { margin-top: 10px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: June 2026</p>
+
+  <section>
+    <h2>Overview</h2>
+    <p>Dark Switch does not collect, store, transmit, or share any personal information. This policy explains what the app does and does not do with your data.</p>
+  </section>
+
+  <section>
+    <h2>Data collected</h2>
+    <p>None. Dark Switch does not collect any data of any kind.</p>
+  </section>
+
+  <section>
+    <h2>Local storage</h2>
+    <p>Dark Switch saves a configuration file to your Mac's local Application Support directory. This file contains only your chosen default appearance mode and any per-app rules you have set. It never leaves your device.</p>
+  </section>
+
+  <section>
+    <h2>System permissions</h2>
+    <p>Dark Switch requests permission to control System Events via Apple Events. This permission is used solely to read and set the macOS system appearance (light or dark mode). No other actions are performed and no information is read from System Events beyond the current appearance state.</p>
+    <p>You can revoke this permission at any time in System Settings under Privacy &amp; Security &rarr; Automation.</p>
+  </section>
+
+  <section>
+    <h2>Network access</h2>
+    <p>Dark Switch does not make any network requests. There are no analytics, crash reporters, update checks, or external services of any kind.</p>
+  </section>
+
+  <section>
+    <h2>Third parties</h2>
+    <p>No data is shared with any third party. There are no third-party SDKs, trackers, or advertising frameworks included in the app.</p>
+  </section>
+
+  <section>
+    <h2>Children</h2>
+    <p>Dark Switch does not collect data from anyone, including children under the age of 13.</p>
+  </section>
+
+  <section>
+    <h2>Changes to this policy</h2>
+    <p>If this policy changes in a material way, the updated version will be published at this URL with a revised date.</p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>Questions about this policy can be directed to the project via the issue tracker on the source code repository.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Copyright &copy; 2026 Preston W &mdash; MIT License</p>
+</footer>
+
+</body>
+</html>
