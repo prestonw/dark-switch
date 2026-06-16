@@ -1,11 +1,14 @@
 import AppKit
 
+private let githubURL = URL(string: "https://github.com/prestonw/dark-switch")!
+private let licenseURL = URL(string: "https://github.com/prestonw/dark-switch/blob/main/LICENSE")!
+
 final class AboutWindowController: NSWindowController {
     static let shared = AboutWindowController()
 
     private init() {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 360, height: 280),
+            contentRect: NSRect(x: 0, y: 0, width: 360, height: 300),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -41,17 +44,21 @@ final class AboutWindowController: NSWindowController {
             stack.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -24)
         ])
 
-        // App icon
-        let iconView = NSImageView()
-        iconView.image = NSApp.applicationIconImage
-        iconView.imageScaling = .scaleProportionallyUpOrDown
-        iconView.translatesAutoresizingMaskIntoConstraints = false
+        // Clickable app icon → GitHub
+        let iconButton = NSButton()
+        iconButton.image = NSApp.applicationIconImage
+        iconButton.imageScaling = .scaleProportionallyUpOrDown
+        iconButton.bezelStyle = .shadowlessSquare
+        iconButton.isBordered = false
+        iconButton.target = self
+        iconButton.action = #selector(openGitHub)
+        iconButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            iconView.widthAnchor.constraint(equalToConstant: 80),
-            iconView.heightAnchor.constraint(equalToConstant: 80)
+            iconButton.widthAnchor.constraint(equalToConstant: 80),
+            iconButton.heightAnchor.constraint(equalToConstant: 80)
         ])
-        stack.addArrangedSubview(iconView)
-        stack.setCustomSpacing(12, after: iconView)
+        stack.addArrangedSubview(iconButton)
+        stack.setCustomSpacing(12, after: iconButton)
 
         // App name
         let nameLabel = label("Dark Switch", size: 18, weight: .bold)
@@ -83,10 +90,15 @@ final class AboutWindowController: NSWindowController {
         stack.addArrangedSubview(divider)
         stack.setCustomSpacing(12, after: divider)
 
-        // Open source notice
-        let ossLabel = label("Open source software  —  MIT License", size: 11, weight: .regular)
-        ossLabel.textColor = .tertiaryLabelColor
-        stack.addArrangedSubview(ossLabel)
+        // Links row
+        let linksRow = NSStackView()
+        linksRow.orientation = .horizontal
+        linksRow.spacing = 12
+        linksRow.addArrangedSubview(linkLabel("View on GitHub", url: githubURL))
+        linksRow.addArrangedSubview(separatorLabel())
+        linksRow.addArrangedSubview(linkLabel("MIT License", url: licenseURL))
+        stack.addArrangedSubview(linksRow)
+        stack.setCustomSpacing(6, after: linksRow)
 
         // Copyright
         let copyLabel = label("Copyright \u{00A9} 2026 Preston W", size: 11, weight: .regular)
@@ -94,10 +106,41 @@ final class AboutWindowController: NSWindowController {
         stack.addArrangedSubview(copyLabel)
     }
 
+    // MARK: - Helpers
+
     private func label(_ text: String, size: CGFloat, weight: NSFont.Weight) -> NSTextField {
         let field = NSTextField(labelWithString: text)
         field.font = .systemFont(ofSize: size, weight: weight)
         field.alignment = .center
         return field
+    }
+
+    private func linkLabel(_ text: String, url: URL) -> NSTextField {
+        let field = NSTextField()
+        field.isEditable = false
+        field.isBordered = false
+        field.backgroundColor = .clear
+        field.isSelectable = true
+        field.allowsEditingTextAttributes = true
+        field.alignment = .center
+
+        let str = NSMutableAttributedString(string: text)
+        str.addAttributes([
+            .link: url,
+            .font: NSFont.systemFont(ofSize: 11)
+        ], range: NSRange(location: 0, length: str.length))
+        field.attributedStringValue = str
+        return field
+    }
+
+    private func separatorLabel() -> NSTextField {
+        let f = NSTextField(labelWithString: "·")
+        f.font = .systemFont(ofSize: 11)
+        f.textColor = .tertiaryLabelColor
+        return f
+    }
+
+    @objc private func openGitHub() {
+        NSWorkspace.shared.open(githubURL)
     }
 }
