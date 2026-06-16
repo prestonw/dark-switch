@@ -2,7 +2,7 @@ APP_NAME = DarkSwitch
 BUNDLE   = $(APP_NAME).app
 LAUNCHD  = $(HOME)/Library/LaunchAgents/com.prestonw.dark-switch.plist
 
-.PHONY: build bundle run install launchd uninstall clean
+.PHONY: build bundle run install launchd uninstall zip clean
 
 build:
 	swift build -c release
@@ -45,5 +45,9 @@ uninstall:
 	-rm -rf /Applications/$(BUNDLE)
 	@echo "Uninstalled"
 
+zip: bundle
+	ditto -c -k --sequesterRsrc --keepParent $(BUNDLE) DarkSwitch.zip
+	@echo "Created DarkSwitch.zip"
+
 clean:
-	rm -rf .build $(BUNDLE)
+	rm -rf .build $(BUNDLE) DarkSwitch.zip AppIcon.icns

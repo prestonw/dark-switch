@@ -2,12 +2,16 @@
 
 A macOS menu bar utility that automatically switches between light and dark mode based on whichever app is in the foreground. Set per-app rules so certain apps always open in light or dark mode, while everything else follows your default.
 
+## Download
+
+Grab the latest `DarkSwitch.zip` from the [Releases](https://github.com/prestonw/dark-switch/releases) page, unzip it, and drag `DarkSwitch.app` to your `/Applications` folder.
+
 ## Requirements
 
-- macOS (Sonoma or later recommended)
-- Go 1.22 or later
+- macOS 13 (Ventura) or later
+- Xcode Command Line Tools (for building from source only)
 
-## Install
+## Install from source
 
 ```bash
 git clone https://github.com/prestonw/dark-switch.git
@@ -39,17 +43,20 @@ Click the menu bar icon to:
 - Clear a rule for the current foreground app
 - View and remove all active rules
 
-Rules are stored at `~/.config/dark-switch/config.json`.
+Rules are stored in `~/Library/Application Support/DarkSwitch/config.json`.
+
+On first launch, macOS will ask permission for Dark Switch to control System Events. This is required to switch the system appearance.
 
 ## How it works
 
-dark-switch polls the frontmost application every 300ms. When it detects a change, it checks for a per-app rule and applies the matching appearance. If no rule exists, it falls back to your configured default.
+Dark Switch listens for `NSWorkspace.didActivateApplicationNotification`. When you switch apps it checks for a per-app rule and applies the matching appearance. If no rule exists it falls back to your configured default.
 
 ## Building from source
 
 ```bash
-make build   # produces ./dark-switch binary
-make bundle  # produces ./DarkSwitch.app
+make build   # compile only
+make bundle  # produce ./DarkSwitch.app
+make zip     # produce DarkSwitch.zip for distribution
 make run     # build and run directly
 ```
 
